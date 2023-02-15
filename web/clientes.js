@@ -47,7 +47,7 @@ function carregarClientes() {
 
 //Função para carregar os dados de um único cliente a partir da API
 //Esta função é somente necessária para a ALTERAÇÃO
-function carregarDadosCliente() {
+function CarregarDadosCliente() {
     var id = localStorage.getItem(IDX_STORAGE_ID);
 
     if(id) { //Se encontrou o ID, é uma alteração

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Projeto Final de Tópicos Especiais</title>
+  </head>
+  <body onload="loadVehiclesData();">
+    <div class="container">
+      <div class="row" style="margin-top: 20px;">
+          <div class="col-12">
+              <h3 id="operacao">Cadastrar Veículo</h3>
+          </div>
+      </div>
+
+      <div class="row" style="margin-top: 10px;">
+          <div class="col-6">
+              <form id="frmCliente">
+
+                <div class="form-group">
+                    <label for="txtPlaca">Placa</label>
+                    <input type="text" class="form-control" id="txtPlaca" maxlength="7" style="width: 450px;" />
+                </div>
+
+                <div class="form-group">
+                  <label for="txtModelo">Modelo</label>
+                  <input type="text" class="form-control" id="txtModelo" maxlength="50" style="width: 450px;" />
+                </div>
+
+                <div class="form-group">
+                  <label for="txtFabricante">Fabricante</label>
+                  <input type="text" class="form-control" id="txtFabricante" maxlength="50" style="width: 450px;" />
+                </div>
+
+                <div class="form-group">
+                    <label for="txtAno">Ano de Fabricação</label>
+                    <input type="number" class="form-control" id="txtAno" maxlength="4" style="width: 450px;" />
+                  </div>
+
+              </form>
+          </div>
+
+          <div class="col-6">
+            <div id="divErro" class="alert alert-danger" style="display: none;">
+            </div>
+          </div>
+      </div>
+
+      <div class="row" style="margin-top: 10px;">
+        <div class="col-6">
+          <button type="button" class="btn btn-success" onclick="saveVehicle();">Gravar</button>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 30px;">
+        <div class="col-12">
+          <button type="button" class="btn btn-outline-secondary" onclick="window.location = 'vehicles.html';">Voltar</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="vehicles.js"></script>
+
+    <!-- JS Bootstrap -->
+    <!-- JavaScript (Opcional) -->
+    <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>

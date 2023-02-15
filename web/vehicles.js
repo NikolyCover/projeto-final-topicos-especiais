@@ -43,12 +43,10 @@ function loadVehicles() {
     
 }
 
-//Função para carregar os dados de um único cliente a partir da API
-//Esta função é somente necessária para a ALTERAÇÃO
-function carregarDadosCliente() {
-    var id = localStorage.getItem(IDX_STORAGE_ID);
+function loadVehiclesData() {
+    var id = localStorage.getItem(IDX_STORAGE_ID); //Se encontrou o ID, é uma alteração
 
-    if(id) { //Se encontrou o ID, é uma alteração
+    if(id) {
         //Carregar os clientes a partir da API
         var xhttp = new XMLHttpRequest();
         xhttp.open("GET", URL_API + "/" + id, false);
@@ -56,54 +54,52 @@ function carregarDadosCliente() {
 
         //Seta os dados do cliente para o formulário
         var retorno = xhttp.responseText;
-        var cliente = JSON.parse(retorno);
-        document.getElementById("txtNome").value = cliente.nome;
-        document.getElementById("txtEmail").value = cliente.email;
-        document.getElementById("txtTelefone").value = cliente.telefone;
+        var vehicle = JSON.parse(retorno);
+        document.getElementById("txtPlaca").value = vehicle.placa;
+        document.getElementById("txtModelo").value = vehicle.modelo;
+        document.getElementById("txtFabricante").value = vehicle.fabricante;
+        document.getElementById("txtAno").value = vehicle.anoFabricacao;
     }
 }
 
-//Função para iniciar a inclusão de um cliente
-function incluirCliente() {
+function addVehicle() {
     localStorage.removeItem(IDX_STORAGE_ID); //Necessário para a ALTERAÇÃO
-    window.location = "create-clients.html";
+    window.location = "create-vehicles.html";
 }
 
-//Função para iniciar a ALTERAÇÃO de um cliente
-function alterarCliente(id) {
+function editVehicle(id) {
     localStorage.setItem(IDX_STORAGE_ID, id);
-    window.location = 'clientes_form.html';
+    window.location = '';
 }
 
-//Função para salvar um cliente (inclusão ou alteração)
-function salvarCliente() {
-    //Capturar os valores do formulário e criar o JSON para enviar a API
-    var nome = document.getElementById('txtNome').value;
-    var email = document.getElementById('txtEmail').value;
-    var fone = document.getElementById('txtTelefone').value;
+function saveVehicle() {
+    var placa = document.getElementById('txtPlaca').value;
+    var modelo = document.getElementById('txtModelo').value;
+    var fabricante = document.getElementById('txtFabricante').value;
+    var ano = document.getElementById('txtAno').value
 
-    var cliente = { "nome": nome,
-                    "email": email,
-                    "telefone": fone };
+
+    var vehicle = { "placa": placa,
+                    "modelo": modelo,
+                    "fabricante": fabricante,
+                    "anoFabricacao": ano };
 
     var url = URL_API;
     var method = 'POST';
     
-    //Bloco necessário para a ALTERAÇÃO
     var id = localStorage.getItem(IDX_STORAGE_ID);
     if(id) {
         url = url + "/" + id;
         method = "PUT";
     }
 
-    //Salvar o cliente a partir da API
     var xhttp = new XMLHttpRequest();
     xhttp.open(method, url, false);
     xhttp.setRequestHeader('Content-Type', 'application/json');
-    xhttp.send(JSON.stringify(cliente));
+    xhttp.send(JSON.stringify(vehicle));
 
     if(xhttp.status == STATUS_CREATED || xhttp.status == STATUS_OK) {
-        window.location = 'clients.html';
+        window.location = 'vehicles.html';
     } else {
         var msg = retornaMsgErro(xhttp.responseText);
 
@@ -114,20 +110,19 @@ function salvarCliente() {
     }
 }
 
-//Função para excluir um cliente
-function excluirCliente(id) {
-    //Confirma a exclusão
-    if(! confirm('Confirma a exclusão do cliente?'))
+function deleteVehicle(id) {
+    
+    if(! confirm('Confirma a exclusão do veículo?'))
         return;
 
-    //Exclui o cliente a partir da API
+    
     var xhttp = new XMLHttpRequest();
     var url = URL_API + "/" + id;
     xhttp.open("DELETE", url, false);
     xhttp.send();
 
     if(xhttp.status == STATUS_OK) {
-        carregarClientes(); //Recarreca da tabela de clientes
+        loadVehicles();
         var divMsg = document.getElementById('divSucesso');
         divMsg.innerHTML = "Cliente excluído com sucesso.";
         divMsg.style.display = "block";
@@ -138,7 +133,6 @@ function excluirCliente(id) {
     }
 }
 
-//Função AUXILIAR que cria um botão no HTML
 function criarBotao(texto, classeEstilo, acao, id) {
     var btn = document.createElement('button');
     btn.type = 'button';
@@ -147,11 +141,11 @@ function criarBotao(texto, classeEstilo, acao, id) {
     
     if(acao == ALTERAR)
         btn.addEventListener("click", function() {
-            alterarCliente(id);
+            editVehicle(id);
         });
     else if(acao == EXCLUIR)
         btn.addEventListener("click", function() {
-            excluirCliente(id);
+            deleteVehicle(id);
         });
 
     return btn;
